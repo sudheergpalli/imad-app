@@ -15,11 +15,13 @@ app.get('/message1', function (req, res) {
 });
 
 app.get('/message2', function (req, res) {
-  res.send("Second Message is Displayed");
+  //res.send("Second Message is Displayed");
+  res.sendFile(path.join(__dirname, 'ui', 'message2.html'));
 });
 
 app.get('/message3', function (req, res) {
-  res.send("Third Message is Displayed");
+  //res.send("Third Message is Displayed");
+  res.sendFile(path.join(__dirname, 'ui', 'message3.html'));
 });
 
 
