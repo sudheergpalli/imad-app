@@ -10,7 +10,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/message1', function (req, res) {
-  res.send("First Message is Displayed");
+  // res.send("First Message is Displayed");
+  res.sendFile(path.join(__dirname, 'ui', 'message1.html'));
 });
 
 app.get('/message2', function (req, res) {
