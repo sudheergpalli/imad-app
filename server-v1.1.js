@@ -30,7 +30,7 @@ var message3 = {
     header : "I am in Mesage 3 Page"
 };
 
-// function to return html using java script object as an argument 
+// function to return html using java script object as an argument .
 function createhtml(data){
     var title = data.title;
     var date = data.date;
