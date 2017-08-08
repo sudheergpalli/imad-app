@@ -58,13 +58,13 @@ app.get('/message1', function (req, res) {
 
 app.get('/message2', function (req, res) {
   //res.send("Second Message is Displayed");
-  res.sendFile(path.join(__dirname, 'ui', 'message2.html'));
+  //res.sendFile(path.join(__dirname, 'ui', 'message2.html'));
   res.sendFile(createhtml(message2));
 });
 
 app.get('/message3', function (req, res) {
   //res.send("Third Message is Displayed");
-  res.sendFile(path.join(__dirname, 'ui', 'message3.html'));
+  //res.sendFile(path.join(__dirname, 'ui', 'message3.html'));
   res.sendFile(createhtml(message3));
 });
 
