@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 
 // Java Script Object for message1
 
-var messages = {message1: {
+var messages = {'message1': {
     title : "Messsage 1 Page",
     date  : "Date is 8th Aug 2017",
     header : "I am in Mesage 1 Page"
