@@ -64,12 +64,16 @@ app.get('/ui/style.css', function (req, res) {
 });
 
 app.get('/ui/madi.png', function (req, res) {
-  res.send(path.join(__dirname, 'ui', 'madi.png'));
+  res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
 });
 
 //if you don't write below code , your java script that is mentioned in index.html file does not work and return http status code 404
 app.get('/ui/main.js', function (req, res) {
-  res.send(path.join(__dirname, 'ui', 'main.js'));
+  res.sendFile(path.join(__dirname, 'ui', 'main.js'));
+});
+
+app.get('/favicon.ico', function (req, res) {
+  res.sendFile(path.join(__dirname, 'favicon.ico'));
 });
 
 
