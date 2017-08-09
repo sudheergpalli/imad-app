@@ -58,7 +58,7 @@ function createhtml(data){
     </html>`;
     return htmlcontent;     
 }
-app.get('/favicon1.ico', function (req, res) {
+app.get('/favicon.ico', function (req, res) {
   //res.send("i am in FAV ICON");
   res.sendFile(path.join(__dirname, 'favicon.ico1'));
 });
