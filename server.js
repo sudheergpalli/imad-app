@@ -67,6 +67,11 @@ app.get('/ui/madi.png', function (req, res) {
   res.send(path.join(__dirname, 'ui', 'madi.png'));
 });
 
+//if you don't write below code , your java script that is mentioned in index.html file does not work and return http status code 404
+app.get('/ui/main.js', function (req, res) {
+  res.send(path.join(__dirname, 'ui', 'main.js'));
+});
+
 
 // Do not change port, otherwise your app won't run on IMAD servers
 // Use 8080 only for local development if you already have apache running on 80
