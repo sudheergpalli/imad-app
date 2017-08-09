@@ -25,13 +25,30 @@ var messages = {message1: {
     title : "Messsage 3 Page",
     date  : "Date is 8th Aug 2019",
     header : "I am in Mesage 3 Page"
-                 },
-                 faviconico: {
-                     
                  }
 };
 // function to return html using java script object as an argument .
 function createhtml(data){
+    if (data == 'favicon.ico') {
+        var htmlcontent1 = `<html>
+    <head>
+      <title> Fav Icon Page </title>
+    </head>
+    <body>
+      <div>
+        <a href="/"> Home </a>
+        <hr/>
+      </div>
+      
+      <div> 11 August 2020 </div>
+      
+      <h1> I am in Fav Icon Page </h1>
+      
+    </body>
+    </html>`;
+    return htmlcontent1;
+    }
+    
     var title = data.title;
     var date = data.date;
     var header = data.header;
