@@ -58,10 +58,11 @@ function createhtml(data){
     </html>`;
     return htmlcontent;     
 }
+
 app.get('/favicon.ico', function (req, res) {
   //res.send("i am in FAV ICON");
-  res.sendFile(path.join(__dirname, 'favicon.ico1'));
-});
+  res.sendFile(path.join(__dirname, 'favicon.ico'));
+}); 
 
 app.get('/sudheer', function (req, res) {
   res.send("i am in sudheer page");
