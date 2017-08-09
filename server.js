@@ -9,10 +9,10 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-var Counter = 0;
+var counter = 0;
 app.get('/Counter',function(req,res){
-  Counter = Counter + 1;
-  res.send(Counter.toString());
+  counter = counter + 1;
+  res.send(counter.toString());
 });
 
 // Java Script Object for message1
