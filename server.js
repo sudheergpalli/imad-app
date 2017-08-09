@@ -56,6 +56,10 @@ app.get('/favicon.ico', function (req, res) {
   res.send("i am in FAV ICON");
 });
 
+app.get('/sudheer', function (req, res) {
+  res.send("i am in sudheer page");
+});
+
 app.get('/:messageName', function (req, res) {
   // res.send("First Message is Displayed");
   //res.sendFile(path.join(__dirname, 'ui', 'message1.html'));
