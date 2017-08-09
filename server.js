@@ -60,7 +60,7 @@ function createhtml(data){
 }
 app.get('/favicon.ico', function (req, res) {
   //res.send("i am in FAV ICON");
-  res.sendFile(path.join(__dirname, 'favicon.ico'));
+  res.sendFile(path.join(__dirname, 'favicon.ico1'));
 });
 
 app.get('/sudheer', function (req, res) {
