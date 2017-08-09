@@ -29,25 +29,6 @@ var messages = {message1: {
 };
 // function to return html using java script object as an argument .
 function createhtml(data){
-    if (data == 'favicon.ico') {
-        var htmlcontent1 = `<html>
-    <head>
-      <title> Fav Icon Page </title>
-    </head>
-    <body>
-      <div>
-        <a href="/"> Home </a>
-        <hr/>
-      </div>
-      
-      <div> 11 August 2020 </div>
-      
-      <h1> I am in Fav Icon Page </h1>
-      
-    </body>
-    </html>`;
-    return htmlcontent1;
-    }
     
     var title = data.title;
     var date = data.date;
@@ -71,6 +52,10 @@ function createhtml(data){
     </html>`;
     return htmlcontent;     
 }
+app.get('/favicon.ico', function (req, res) {
+  res.send("i am in FAV ICON");
+});
+
 app.get('/:messageName', function (req, res) {
   // res.send("First Message is Displayed");
   //res.sendFile(path.join(__dirname, 'ui', 'message1.html'));
