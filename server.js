@@ -25,7 +25,10 @@ var messages = {message1: {
     title : "Messsage 3 Page",
     date  : "Date is 8th Aug 2019",
     header : "I am in Mesage 3 Page"
-}
+                 },
+                 faviconico: {
+                     
+                 }
 };
 // function to return html using java script object as an argument .
 function createhtml(data){
