@@ -16,12 +16,12 @@ var messages = {message1: {
     date  : "Date is 8th Aug 2017",
     header : "I am in Mesage 1 Page"
                 },
-                 message2:{
+                 message2: {
     title : "Messsage 2 Page",
     date  : "Date is 8th Aug 2018",
     header : "I am in Mesage 2 Page"
                  },
-                 message3:{
+                 message3: {
     title : "Messsage 3 Page",
     date  : "Date is 8th Aug 2019",
     header : "I am in Mesage 3 Page"
