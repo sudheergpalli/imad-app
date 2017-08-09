@@ -72,8 +72,8 @@ app.get('/ui/main.js', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'main.js'));
 });
 
-app.get('/favicon.ico', function (req, res) {
-  res.sendFile(path.join(__dirname, 'favicon.ico'));
+app.get('/SreeCharan.JPG', function (req, res) {
+  res.sendFile(path.join(__dirname, 'SreeCharan.JPG'));
 });
 
 
