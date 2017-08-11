@@ -9,25 +9,25 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-// Java Script Object for message1
-var message1 = {
-    title : "Messsage 1 Page",
+// Java Script Object for article1
+var article1 = {
+    title : "Article 1 Page",
     date  : "Date is 8th Aug 2017",
-    header : "I am in Mesage 1 Page"
+    header : "I am in Article 1 Page"
 };
 
-// Java Script Object for message2
-var message2 = {
-    title : "Messsage 2 Page",
+// Java Script Object for article2
+var article2 = {
+    title : "Article 2 Page",
     date  : "Date is 8th Aug 2018",
-    header : "I am in Mesage 2 Page"
+    header : "I am in Article 2 Page"
 };
 
-// Java Script Object for message3
-var message3 = {
-    title : "Messsage 3 Page",
+// Java Script Object for article3
+var article3 = {
+    title : "Article 3 Page",
     date  : "Date is 8th Aug 2019",
-    header : "I am in Mesage 3 Page"
+    header : "I am in Article 3 Page"
 };
 
 // function to return html using java script object as an argument .
@@ -54,22 +54,22 @@ function createhtml(data){
     </html>`;
     return htmlcontent;     
 }
-app.get('/message1', function (req, res) {
-  // res.send("First Message is Displayed");
-  //res.sendFile(path.join(__dirname, 'ui', 'message1.html'));
-  res.send(createhtml(message1));  // sending 'message1' java script object as an parameter to function 'createhtml' that retruns 'html' page
+app.get('/article1', function (req, res) {
+  // res.send("First Article is Displayed");
+  //res.sendFile(path.join(__dirname, 'ui', 'article1.html'));
+  res.send(createhtml(article1));  // sending 'article1' java script object as an parameter to function 'createhtml' that retruns 'html' page
 });
 
-app.get('/message2', function (req, res) {
-  //res.send("Second Message is Displayed");
-  //res.sendFile(path.join(__dirname, 'ui', 'message2.html'));
-  res.send(createhtml(message2)); // sending 'message2' java script object as an parameter to function 'createhtml' that retruns 'html' page
+app.get('/article2', function (req, res) {
+  //res.send("Second Article is Displayed");
+  //res.sendFile(path.join(__dirname, 'ui', 'article2.html'));
+  res.send(createhtml(article2)); // sending 'article2' java script object as an parameter to function 'createhtml' that retruns 'html' page
 });
 
-app.get('/message3', function (req, res) {
-  //res.send("Third Message is Displayed");
-  //res.sendFile(path.join(__dirname, 'ui', 'message3.html'));
-  res.sendFile(createhtml(message3)); // sending 'message3' java script object as an parameter to function 'createhtml' that retruns 'html' page
+app.get('/article3', function (req, res) {
+  //res.send("Third Article is Displayed");
+  //res.sendFile(path.join(__dirname, 'ui', 'article3.html'));
+  res.sendFile(createhtml(article3)); // sending 'article3' java script object as an parameter to function 'createhtml' that retruns 'html' page
 });
 
 
