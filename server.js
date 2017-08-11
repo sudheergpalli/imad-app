@@ -9,28 +9,67 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
+//adding  endpoint 'counter'
 var counter = 0;
 app.get('/counter',function(req,res){
   counter = counter + 1;
   res.send(counter.toString());
 });
 
-// Java Script Object for message1
+/*
+//adding end point called 'submit-name' along with a value and it will be displayed on the screen
+// by adding that value to existing array
+var names = []; //empty javascript Array
+app.get('/submit-name/:name',function(req,res){	
+	var name = req.params.name; 	
+	names.push(name);
+	res.send(JSON.stringify(names));
+}); */
 
-var messages = {message1: {
-    title : "Messsage 1 Page",
+//adding end point called 'submit-name' using string paramater with a question mark after end point ex: /submit-name?name=XXXX
+// and it will be displayed on the screen
+// by adding that value to existing array
+var names = []; //empty javascript Array
+app.get('/submit-name',function(req,res){	
+	var name = req.query.name;   // here 'name' in req.query.name should match with query string parameter that is in between ? and = symbol
+	// if 'name' object is returned as Not Null (returned an object)
+	if (name != undefined) {
+	names.push(name);
+	res.send(JSON.stringify(names));
+	}
+	// if 'name' object is returned as Null (undefined)
+	else{
+		res.send('error: something wrong in the string after question mark')
+	}
+}); 
+
+
+app.get('/favicon.ico', function (req, res) {
+  //res.send("i am in FAV ICON");
+  res.sendFile(path.join(__dirname, 'favicon.ico'));
+}); 
+
+app.get('/sudheer', function (req, res) {
+  res.send("i am in sudheer page");
+});
+
+
+// Java Script Object for article1
+
+var articles = {article1: {
+    title : "Article 1 Page",
     date  : "Date is 8th Aug 2017",
-    header : "I am in Mesage 1 Page"
+    header : "I am in Article 1 Page"
                 },
-                 message2: {
-    title : "Messsage 2 Page",
+                 article2: {
+    title : "Article 2 Page",
     date  : "Date is 8th Aug 2018",
-    header : "I am in Mesage 2 Page"
+    header : "I am in Article 2 Page"
                  },
-                 message3: {
-    title : "Messsage 3 Page",
+                 article3: {
+    title : "Article 3 Page",
     date  : "Date is 8th Aug 2019",
-    header : "I am in Mesage 3 Page"
+    header : "I am in Article 3 Page"
                  }
 };
 // function to return html using java script object as an argument .
@@ -59,22 +98,15 @@ function createhtml(data){
     return htmlcontent;     
 }
 
-app.get('/favicon.ico', function (req, res) {
-  //res.send("i am in FAV ICON");
-  res.sendFile(path.join(__dirname, 'favicon.ico'));
-}); 
-
-app.get('/sudheer', function (req, res) {
-  res.send("i am in sudheer page");
+// here :/articleName stands for URL pattern match i.e anything that comes after / , below code is executed 
+app.get('/:articleName', function (req, res) {
+  // res.send("First Article is Displayed");
+  //res.sendFile(path.join(__dirname, 'ui', 'article1.html'));
+  //res.send(createhtml(article1));  // sending 'article1' java script object as an parameter to function 'createhtml' that retruns 'html' page
+  var articleName = req.params.articleName;
+  res.send(createhtml(articles[articleName]));
 });
 
-app.get('/:messageName', function (req, res) {
-  // res.send("First Message is Displayed");
-  //res.sendFile(path.join(__dirname, 'ui', 'message1.html'));
-  //res.send(createhtml(message1));  // sending 'message1' java script object as an parameter to function 'createhtml' that retruns 'html' page
-  var messageName = req.params.messageName;
-  res.send(createhtml(messages[messageName]));
-});
 
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
