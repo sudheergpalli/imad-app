@@ -11,7 +11,7 @@ if (button == undefined) {
 button.onclick = function(){
 	
 	var request = new XMLHttpRequest();
-	request.open('GET','http://localhost/counter',true);
+	request.open('GET','http://sudheergandla.imad.hasura-app.io/counter',true);
 	request.send(null);
 	
 	request.onreadystatechange = function(){
@@ -37,7 +37,7 @@ submitbtn.onclick = function(){
 	var name = inputbox.value;
 	
 	var request = new XMLHttpRequest();
-	request.open('GET','http://localhost/submit-name?name=' + name,true); //you are maing a  request to end-point 'submit-name' using string parameter
+	request.open('GET','http://sudheergandla.imad.hasura-app.io/submit-name?name=' + name,true); //you are maing a  request to end-point 'submit-name' using string parameter
 	request.send(null);
 	
 	request.onreadystatechange = function(){
