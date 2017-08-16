@@ -1,33 +1,40 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
+var Pool = require('pg').Pool; // for DB connection with Postgres DB
+var crypto = require('crypto'); // for Password Hashing 
+// Install 'body-parser' module 'npm install body-parser ' before using 
+var bodyParser = require('body-parser'); // we are telling to read the data that is in body of HTTP POST request
 
-var pool = require('pg').pool;
+var app = express();
+app.use(morgan('combined'));
+app.use(bodyParser.json()); // using 'json' from bodyParser accept JSON data from the HTTP POST request
 
 var config = {
 	user: 'sudheergandla',
 	database: 'sudheergandla',
 	host: 'db.imad.hasura-app.io',
 	port: '5432',
-	password: process.env.DB_PASSWORD
+	password: 'db-sudheergandla-1436'
+	//password: process.env.DB_PASSWORD
 };
 
-var app = express();
-app.use(morgan('combined'));
+// creates a connection to DB
+var pool = new Pool(config);
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-// creates a connection to DB
-var pool = new pool(config);
+
 app.get('/test-db',function(req,res){
-	pool.query('SELECT * from user',function(err,results){
+	pool.query('SELECT * FROM tag',function(err,results){
 		if (err) {
 		res.status(500).send(err.toString());	
 		}
 		else {
-		res.send(JSON.stringify(results));	
+		// res.send(JSON.stringify(results));	// produces JSON object 
+		res.send('Rows in the table are ' + JSON.stringify(results.rows));	 // retrieving only rows from JSON Object - results 
 		}
 	});
 });
@@ -76,6 +83,45 @@ app.get('/sudheer', function (req, res) {
   res.send("i am in sudheer page");
 });
 
+function hash_create(input,salt){
+	// creating a Hash using crypto 
+	var hashed = crypto.pbkdf2Sync(input,'salt',10000,512,'sha512'); // output is sequence of bytes that is going to store in 'hashes' variable here
+	return hashed.toString('hex');  // converting it to readbale and printable on the screen using toString() function
+}
+
+// Password Hashing
+app.get('/hash/:input',function(req,res){
+	var hashedString = hash_create(req.params.input,'this-is-some-randon-string');
+	res.send(hashedString);
+});
+
+function hash(input,salt){
+	// creating a Hash using crypto 
+	var hashed = crypto.pbkdf2Sync(input,'salt',10000,512,'sha512'); // output is sequence of bytes that is going to store in 'hashes' variable here
+	// return hashed.toString('hex');  // converting it to readbale and printable on the screen using toString() function
+	var arryHashed = ['pbkdf2','10000',salt,hashed.toString('hex')] ; //creating an array to have different elemetns along with hashed string
+	return arryHashed.join('$');
+}
+
+app.post('/create-user',function(err,res){
+	
+	// we will retriving username and password from HTTP post request which will be in body of the POST request 
+	// data will be in JSON format in body of the POST request example {"username": "sudheer","password": "XXX***HELLO"}
+	var username = req.body.username;
+	var password = req.body.password;
+	var salt = crypto.RandomBytes(128).toString('hex');
+	var dbPasswordStr = hash(password,salt);
+	pool.query("INSERT INTO 'user_login' (username,password) VALUES $1,$2",[username,dbPasswordStr],function(err,result){
+		if (err){
+			res.status(500).send(err.toString());
+		}
+		else{
+			res.send('User is Created Successfully ' + username);
+		}
+		
+	});
+	
+});
 
 // Java Script Object for article1
 
@@ -112,7 +158,10 @@ function createhtml(data){
         <hr/>
       </div>
       
-      <div> ${date} </div>
+      <!--  <div> ${date}</div>   -->
+	  <!-- // when fetched from Postgres DB , Date is priting in JavaScript Script and we used toDateString() frunction to convert it into String -->
+	  <div> ${date.toDateString()} </div>
+	  
       
       <h1> ${header} </h1>
       
@@ -128,6 +177,30 @@ app.get('/:articleName', function (req, res) {
   //res.send(createhtml(article1));  // sending 'article1' java script object as an parameter to function 'createhtml' that retruns 'html' page
   var articleName = req.params.articleName;
   res.send(createhtml(articles[articleName]));
+});
+
+app.get('/articles/:articleName', function (req, res) {
+  // res.send("First Article is Displayed");
+  //res.sendFile(path.join(__dirname, 'ui', 'article1.html'));
+  //res.send(createhtml(article1));  // sending 'article1' java script object as an parameter to function 'createhtml' that retruns 'html' page
+  var articleName = req.params.articleName;
+  //  Query looks like SELECT * FROM "articles" WHERE "name" = 'article1'
+   // pool.query('Select * from articles where name = ' + "'" + articleName + "'",function(err,results){
+  // pool.query('Select * from articles where name = ' + "\'" + articleName + "\'",function(err,results){
+  pool.query('Select * from articles where name = $1',[articleName],function(err,results){
+	  if (err) {
+		res.status(500).send(err.toString());	
+		}
+	  else {
+		  if (results.rows.length == 0) {
+			  res.status(400).send('no Article is present with name : "' + articleName + '"');
+		  }
+		  else {
+			  var articleData = results.rows[0];
+			  res.send(createhtml(articleData));
+		  }
+	  }
+  });
 });
 
 
