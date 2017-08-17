@@ -123,6 +123,42 @@ app.post('/create-user',function(req,res){
 	
 });
 
+app.post('/LoginAuth',function(req,res){
+	
+	// we will retriving username and password from HTTP post request which will be in body of the POST request 
+	// data will be in JSON format in body of the POST request example {"username": "sudheer","password": "XXX***HELLO"}
+	var username = req.body.username;
+	var password1 = req.body.password;
+	
+	var salt = crypto.randomBytes(128).toString('hex');
+	
+	pool.query('SELECT * from "user_login" WHERE 'username' = $1)',[username],function(err,result){
+		if (err){
+			res.status(500).send(err.toString());
+		}
+		else{
+			if (result.rows.length == 0){
+			res.status(400).send('No User Found / Worong User Name : ' + username);		
+			}
+			else{
+				var dbPasswordStr = result.rows[0].password
+				var salt = dbPasswordStr.split('$')[2];
+				var hashpasswd = hash(password1,salt);
+				if (hashpasswd == dbPasswordStr){
+				res.send('Password is Matched Successfully for  ' + username);
+				}
+				else{
+					res.send('Password is Not Matched Successfully for  ' + username);
+				}
+			}
+		}
+		
+	});
+	
+});
+
+
+
 // Java Script Object for article1
 
 var articles = {article1: {
