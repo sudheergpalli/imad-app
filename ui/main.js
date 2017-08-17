@@ -61,3 +61,35 @@ submitbtn.onclick = function(){
 		}
 	}
 }
+
+// for Submit Button whose id is submit in index.html
+// adding the html content in index.html by hitting the webserver
+
+
+var loginsubmitbtn = document.getElementById('login_submit_btn');
+loginsubmitbtn.onclick = function(){
+	
+	var username = document.getElementById('username').value;
+	var password = document.getElementById('password').value;
+	console.log(username);
+	console.log(password);
+	var request = new XMLHttpRequest();
+	request.open('POST','http://sudheergandla.imad.hasura-app.io/LoginAuth,true); //you are maing a  request to end-point 'LoginAuth' 
+	request.setRequestHeader('Content-Type','application/json');  // Request Header 
+	// request.send(null); // we used this for GET Request
+	request.send(JSON.stringify({username:username,password:password})); //Request Input data in the body of the request
+	
+	request.onreadystatechange = function(){
+		if (request.readyState == XMLHttpRequest.DONE) {
+			if (request.status == 200){
+				alert("logged in successfully");
+			else if (request.status == 403) {
+				alert("login is not successfull");
+			}
+			else if (request.status == 500) {
+				alert("something wrong in the server");
+			}
+		}
+	}
+}
+
