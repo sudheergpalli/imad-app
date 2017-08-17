@@ -132,7 +132,7 @@ app.post('/LoginAuth',function(req,res){
 	
 	var salt = crypto.randomBytes(128).toString('hex');
 	
-	pool.query('SELECT * from "user_login" WHERE 'username' = $1)',[username],function(err,result){
+	pool.query('SELECT * from "user_login" WHERE username = $1',[username],function(err,result){
 		if (err){
 			res.status(500).send(err.toString());
 		}
