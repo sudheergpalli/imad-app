@@ -143,7 +143,7 @@ app.post('/LoginAuth',function(req,res){
 			else{
 				var dbPasswordStr = result.rows[0].password
 				var salt = dbPasswordStr.split('$')[2];
-				var hashpasswd = hash(password1,salt); //creating a hashedpasswoed for the password submitted (password1)
+				var hashpasswd = hash(password1,salt); //creating a hashedpassword for the password submitted (password1)
 				if (hashpasswd == dbPasswordStr){
 				res.send('Login is Successfull for  ' + username);
 				}
