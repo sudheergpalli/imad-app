@@ -74,7 +74,7 @@ loginsubmitbtn.onclick = function(){
 	console.log(username);
 	console.log(password);
 	var request = new XMLHttpRequest();
-	request.open('POST','http://sudheergandla.imad.hasura-app.io/LoginAuth,true); //you are maing a  request to end-point 'LoginAuth' 
+	request.open('POST','http://sudheergandla.imad.hasura-app.io/LoginAuth',true); //you are maing a  request to end-point 'LoginAuth' 
 	request.setRequestHeader('Content-Type','application/json');  // Request Header 
 	// request.send(null); // we used this for GET Request
 	request.send(JSON.stringify({username:username,password:password})); //Request Input data in the body of the request
@@ -83,6 +83,7 @@ loginsubmitbtn.onclick = function(){
 		if (request.readyState == XMLHttpRequest.DONE) {
 			if (request.status == 200){
 				alert("logged in successfully");
+			}
 			else if (request.status == 403) {
 				alert("login is not successfull");
 			}
