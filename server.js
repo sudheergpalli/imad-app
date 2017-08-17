@@ -145,10 +145,10 @@ app.post('/LoginAuth',function(req,res){
 				var salt = dbPasswordStr.split('$')[2];
 				var hashpasswd = hash(password1,salt);
 				if (hashpasswd == dbPasswordStr){
-				res.send('Password is Matched Successfully for  ' + username);
+				res.send('Login is Successfull for  ' + username);
 				}
 				else{
-					res.send('Password is Not Matched Successfully for  ' + username);
+					res.send('Login is not Successfull for  ' + username);
 				}
 			}
 		}
