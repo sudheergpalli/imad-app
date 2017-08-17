@@ -1,9 +1,9 @@
-var express = require('express');
+var express = require('express'); 
 var morgan = require('morgan');
 var path = require('path');
 var Pool = require('pg').Pool; // for DB connection with Postgres DB
 var crypto = require('crypto'); // for Password Hashing 
-// Install 'body-parser' module 'npm install body-parser ' before using 
+// In you local machine : Install 'body-parser' module 'npm install body-parser ' before using 
 var bodyParser = require('body-parser'); // we are telling to read the data that is in body of HTTP POST request
 
 var app = express();
