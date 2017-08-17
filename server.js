@@ -1,9 +1,9 @@
-var express = require('express'); 
+var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
 var Pool = require('pg').Pool; // for DB connection with Postgres DB
 var crypto = require('crypto'); // for Password Hashing 
-// In you local machine : Install 'body-parser' module 'npm install body-parser ' before using 
+// Install 'body-parser' module 'npm install body-parser ' before using 
 var bodyParser = require('body-parser'); // we are telling to read the data that is in body of HTTP POST request
 
 var app = express();
@@ -85,7 +85,7 @@ app.get('/sudheer', function (req, res) {
 
 function hash_create(input,salt){
 	// creating a Hash using crypto 
-	var hashed = crypto.pbkdf2Sync(input,'salt',10000,512,'sha512'); // output is sequence of bytes that is going to store in 'hashes' variable here
+	var hashed = crypto.pbkdf2Sync(input,salt,10000,512,'sha512'); // output is sequence of bytes that is going to store in 'hashes' variable here
 	return hashed.toString('hex');  // converting it to readbale and printable on the screen using toString() function
 }
 
@@ -97,20 +97,20 @@ app.get('/hash/:input',function(req,res){
 
 function hash(input,salt){
 	// creating a Hash using crypto 
-	var hashed = crypto.pbkdf2Sync(input,'salt',10000,512,'sha512'); // output is sequence of bytes that is going to store in 'hashes' variable here
+	var hashed = crypto.pbkdf2Sync(input,salt,10000,512,'sha512'); // output is sequence of bytes that is going to store in 'hashes' variable here
 	// return hashed.toString('hex');  // converting it to readbale and printable on the screen using toString() function
 	var arryHashed = ['pbkdf2','10000',salt,hashed.toString('hex')] ; //creating an array to have different elemetns along with hashed string
 	return arryHashed.join('$');
 }
 
-app.post('/create-user',function(err,res){
+app.post('/create-user',function(req,res){
 	
 	// we will retriving username and password from HTTP post request which will be in body of the POST request 
 	// data will be in JSON format in body of the POST request example {"username": "sudheer","password": "XXX***HELLO"}
 	var username = req.body.username;
-	var password = req.body.password;
-	var salt = crypto.RandomBytes(128).toString('hex');
-	var dbPasswordStr = hash(password,salt);
+	var password1 = req.body.password;
+	var salt = crypto.randomBytes(128).toString('hex');
+	var dbPasswordStr = hash(password1,salt);
 	pool.query("INSERT INTO 'user_login' (username,password) VALUES ($1,$2)",[username,dbPasswordStr],function(err,result){
 		if (err){
 			res.status(500).send(err.toString());
