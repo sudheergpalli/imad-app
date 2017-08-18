@@ -90,6 +90,9 @@ loginsubmitbtn.onclick = function(){
 			else if (request.status == 500) {
 				alert("something wrong in the server");
 			}
+			else if (request.status == 400) {
+				alert("User Not Found");
+			}
 		}
 	}
 }
