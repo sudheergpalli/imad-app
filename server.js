@@ -5,10 +5,17 @@ var Pool = require('pg').Pool; // for DB connection with Postgres DB
 var crypto = require('crypto'); // for Password Hashing 
 // Install 'body-parser' module 'npm install body-parser ' before using 
 var bodyParser = require('body-parser'); // we are telling to read the data that is in body of HTTP POST request
+// for handling session using cookies
+var session = requires('express-session');
 
 var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json()); // using 'json' from bodyParser accept JSON data from the HTTP POST request
+app.use(session({
+    secret: "someRandonSccretValue",
+    cookie: {maxAge: 1000*60*60*24*30}  // 1000*60 is 1 minute and 1000*60*60 is 1 hour and 1000*60*60*24 is 1 day , 1000*60*60*24*30 is 1 month
+    
+}));
 
 var config = {
 	user: 'sudheergandla',
@@ -145,6 +152,11 @@ app.post('/LoginAuth',function(req,res){
 				var salt = dbPasswordStr.split('$')[2];
 				var hashpasswd = hash(password1,salt); //creating a hashedpassword for the password submitted (password1)
 				if (hashpasswd == dbPasswordStr){
+				    //setting a cookie with session id that generates randomly
+				    // internally on server side it maps the session id to the object and it conatins another object called 'auth'
+				    // 'auth' contains ex : {auth: "username"}
+				    req.session.auth = {userid: result.rows[0].userid};
+				    
 				res.send('Login is Successfull for  ' + username);
 				}
 				else{
