@@ -155,7 +155,8 @@ app.post('/LoginAuth',function(req,res){
 				    //setting a cookie with session id that generates randomly
 				    // internally on server side it maps the session id to the object and it conatins another object called 'auth'
 				    // 'auth' contains ex : {auth: {userid: "username"}}
-				    req.session.auth = {userid: result.rows[0].userid};
+				    // req.session.auth = {userid: result.rows[0].userid};
+				    req.session.auth = {userid: result.rows[0].username};
 				    
 				res.send('Login is Successfull for  ' + username);
 				}
@@ -172,7 +173,8 @@ app.post('/LoginAuth',function(req,res){
 // check login
 app.get('/check-login',function(req,res){
     if (req.session && req.session.auth && req.session.auth.userid) {
-       res.send(' u r logged in as : ' +  req.session.auth.userid.toString());
+       // res.send(' u r logged in as : ' +  req.session.auth.userid.toString());
+       res.send(' u r logged in as : ' +  req.session.auth.userid);
    } 
    else{
        res.send('you are not logged in');
